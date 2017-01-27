@@ -1,17 +1,12 @@
-# Simple CNN model for CIFAR-10
 import numpy
 import matplotlib.pyplot as plt
 from time import time
 
 from keras.models import Sequential
-from keras.layers import Dense
-from keras.layers import Dropout
-from keras.layers import Flatten
-from keras.layers import Activation
+from keras.layers import Dense, Dropout, Flatten, Activation
 from keras.constraints import maxnorm
 from keras.optimizers import SGD
-from keras.layers.convolutional import Convolution2D
-from keras.layers.convolutional import MaxPooling2D
+from keras.layers.convolutional import Convolution2D, MaxPooling2D, ZeroPadding2D
 from keras.utils import np_utils
 
 from keras.callbacks import ModelCheckpoint
@@ -43,8 +38,8 @@ numpy.random.seed(seed)
 
 # load data
 if response == 'l':
-	matrix_path = '../numpy-matrix/main.npy'
-	label_path = '../numpy-matrix/label.npy'
+	matrix_path = '../../numpy-matrix/main.npy'
+	label_path = '../../numpy-matrix/label.npy'
 	X_train, y_train, X_test, y_test = dataset.load_matrix(matrix_path, label_path)
 else:
 	X_train, y_train, X_test, y_test = dataset.load_data()
@@ -112,12 +107,13 @@ model.add(Dense(4096, activation='relu', name='dense_1'))
 model.add(Dropout(0.5))
 model.add(Dense(4096, activation='relu', name='dense_2'))
 model.add(Dropout(0.5))
-model.add(Dense(1000, name='dense_3'))
-model.add(Activation("softmax",name="softmax"))
+model.add(Dense(1000, activation='relu', name='dense_3'))
+#model.add(Activation("softmax",name="softmax"))
+model.add(Dense(num_classes, activation='softmax', name='dense_4'))
 
 
 '''
-model.add(Convolution2D(32, 3, 3, input_shape=(3, 32, 32), border_mode='same', activation='relu', W_constraint=maxnorm(3)))
+model.add(Convolution2D(32, 3, 3, input_shape=(3, 64, 64), border_mode='same', activation='relu', W_constraint=maxnorm(3)))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.3))
@@ -137,6 +133,8 @@ model.add(Dense(512, activation='relu', W_constraint=maxnorm(3)))
 model.add(Dropout(0.5))
 model.add(Dense(num_classes, activation='softmax'))
 '''
+
+
 
 t0 = time()
 

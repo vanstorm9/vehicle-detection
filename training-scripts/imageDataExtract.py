@@ -139,10 +139,10 @@ def load_data():
 
 	print 'Saving numpy arrays'
 	# We are going to save our matrix and label array
-	np.save('../numpy-matrix/main.npy', main_ar)
-	np.save('../numpy-matrix/label.npy', label)
-	np.save('../numpy-matrix/labelName.npy', labelName)
-	np.save('../numpy-matrix/labelPath.npy', labelPath)
+	np.save('../../numpy-matrix/main.npy', main_ar)
+	np.save('../../numpy-matrix/label.npy', label)
+	np.save('../../numpy-matrix/labelName.npy', labelName)
+	np.save('../../numpy-matrix/labelPath.npy', labelPath)
 	
 	print 'Successfully saved numpy arrays!'
 
