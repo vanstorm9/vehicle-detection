@@ -1,4 +1,3 @@
-# Simple CNN model for CIFAR-10
 import numpy
 import matplotlib.pyplot as plt
 from time import time
