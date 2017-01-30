@@ -2,9 +2,9 @@ from PIL import Image
 import os
 from time import time
 
-starting_value = 5766
+starting_value = 9666
 
-root_path = '../dataset/GTI/'
+root_path = '../scraped-images/no-vehicle/'
 path_to_save = '../dataset/no-vehicle/'
 
 slash = '/'

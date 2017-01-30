@@ -1,10 +1,9 @@
 # import the necessary packages
 import imutils
 
-def pyramid(image, scale=1.5, minSize=(30, 30)):
+def pyramid(image, scale, minSize=(30, 30)):
 	# yield the original image
 	yield image
-
 	# keep looping over the pyramid
 	while True:
 		# compute the new dimensions of the image and resize it
