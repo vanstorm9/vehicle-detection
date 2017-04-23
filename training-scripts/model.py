@@ -108,7 +108,6 @@ model.add(Dropout(0.5))
 model.add(Dense(4096, activation='relu', name='dense_2'))
 model.add(Dropout(0.5))
 model.add(Dense(1000, activation='relu', name='dense_3'))
-model.add(Dense(num_classes, activation='softmax', name='dense_4'))
 
 
 #model.add(Activation("softmax",name="softmax"))

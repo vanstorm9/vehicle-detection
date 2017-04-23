@@ -2,15 +2,15 @@ from PIL import Image
 import os
 from time import time
 
-starting_value = 8510
-'''
+starting_value = 9851
+
 root_path = '../scraped-images/no-vehicle/'
 path_to_save = '../dataset/no-vehicle/'
-'''
 
+'''
 root_path = '../scraped-images/vehicle/'
 path_to_save = '../dataset/vehicle/'
-
+'''
 
 slash = '/'
 root = os.listdir(root_path)
