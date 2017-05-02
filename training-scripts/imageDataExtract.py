@@ -21,10 +21,10 @@ def load_matrix(matrix_path, label_path):
 
 def construct_augmentation_data(classificationObj):
 
-	if classificationObj == 'ball':
+	if classificationObj == 'vehicle':
 		root_path = '../dataset-augmented/ball/'
 
-	elif classificationObj == 'ball':
+	elif classificationObj == 'no-vehicle':
 		root_path = '../dataset-augmented/not-ball/'
 
 	else:

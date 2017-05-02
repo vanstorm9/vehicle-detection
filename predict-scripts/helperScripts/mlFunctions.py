@@ -87,14 +87,14 @@ def initalizeModel():
 	model.add(Convolution2D(512, 3, 3, activation='relu', name='conv5_3'))
 	model.add(MaxPooling2D((2,2), strides=(2,2)))
 
+
 	model.add(Flatten(name="flatten"))
 	model.add(Dense(4096, activation='relu', name='dense_1'))
-	model.add(Dropout(0.5))
+	#model.add(Dropout(0.2))
 	model.add(Dense(4096, activation='relu', name='dense_2'))
-	model.add(Dropout(0.5))
+	#model.add(Dropout(0.2))
 	model.add(Dense(1000, activation='relu', name='dense_3'))
 	model.add(Dense(num_classes, activation='softmax', name='dense_4'))
-
 
 	t0 = time()
 
