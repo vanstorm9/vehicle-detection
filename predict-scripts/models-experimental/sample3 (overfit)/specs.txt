@@ -1,0 +1,55 @@
+small model 
+13,044 in vehicle
+9,667 in non-vehicle
+
+Description:
+Pasted a ton of copies of the white car in the dataset-old to see what would happen (not even image augmentation)
+
+accuracy:
+92.8305631372
+
+
+confusion matrix:
+1947    153
+136     1.795
+
+
+
+
+special note:
+This model is currently suffering from false negatives.
+
+
+model specs:
+
+model.add(Convolution2D(32, 3, 3, input_shape=(3, 64, 64), border_mode='same', activation='relu', W_constraint=maxnorm(3)))
+	model.add(Activation('relu'))
+	model.add(MaxPooling2D(pool_size=(2, 2)))
+	model.add(Dropout(0.3))
+
+	model.add(Convolution2D(32, 3, 3, border_mode='same', activation='relu', W_constraint=maxnorm(3)))
+	model.add(Activation('relu'))
+	model.add(MaxPooling2D(pool_size=(2, 2)))
+	model.add(Dropout(0.3))
+
+	model.add(Convolution2D(32, 3, 3, input_shape=(3, 32, 32), border_mode='same', activation='relu', W_constraint=maxnorm(3)))
+	model.add(Activation('relu'))
+	model.add(MaxPooling2D(pool_size=(2, 2)))
+	model.add(Dropout(0.3))
+
+
+	model.add(Convolution2D(64, 3, 3, input_shape=(3, 32, 32), border_mode='same', activation='relu', W_constraint=maxnorm(3)))
+	model.add(Activation('relu'))
+	model.add(MaxPooling2D(pool_size=(2, 2)))
+	model.add(Dropout(0.3))
+
+
+	model.add(Convolution2D(64, 3, 3, input_shape=(3, 32, 32), border_mode='same', activation='relu', W_constraint=maxnorm(3)))
+	model.add(Activation('relu'))
+	model.add(MaxPooling2D(pool_size=(2, 2)))
+	model.add(Dropout(0.3))
+
+	model.add(Flatten())
+	model.add(Dense(512, activation='relu', W_constraint=maxnorm(3)))
+	model.add(Dropout(0.2))
+	model.add(Dense(num_classes, activation='softmax'))

@@ -1,0 +1,53 @@
+small model 
+10,791 in vehicle
+9,667 in non-vehicle
+
+Description:
+Used ZCA Whitening for data augmentation.
+accuracy:
+88.2209188603
+
+
+confusion matrix:
+1971    168
+314     1639
+
+
+
+
+special note:
+This model is currently suffering from false positives
+
+model specs:
+
+model.add(Convolution2D(32, 3, 3, input_shape=(3, 64, 64), border_mode='same', activation='relu', W_constraint=maxnorm(3)))
+	model.add(Activation('relu'))
+	model.add(MaxPooling2D(pool_size=(2, 2)))
+	model.add(Dropout(0.3))
+
+	model.add(Convolution2D(32, 3, 3, border_mode='same', activation='relu', W_constraint=maxnorm(3)))
+	model.add(Activation('relu'))
+	model.add(MaxPooling2D(pool_size=(2, 2)))
+	model.add(Dropout(0.3))
+
+	model.add(Convolution2D(32, 3, 3, input_shape=(3, 32, 32), border_mode='same', activation='relu', W_constraint=maxnorm(3)))
+	model.add(Activation('relu'))
+	model.add(MaxPooling2D(pool_size=(2, 2)))
+	model.add(Dropout(0.3))
+
+
+	model.add(Convolution2D(64, 3, 3, input_shape=(3, 32, 32), border_mode='same', activation='relu', W_constraint=maxnorm(3)))
+	model.add(Activation('relu'))
+	model.add(MaxPooling2D(pool_size=(2, 2)))
+	model.add(Dropout(0.3))
+
+
+	model.add(Convolution2D(64, 3, 3, input_shape=(3, 32, 32), border_mode='same', activation='relu', W_constraint=maxnorm(3)))
+	model.add(Activation('relu'))
+	model.add(MaxPooling2D(pool_size=(2, 2)))
+	model.add(Dropout(0.3))
+
+	model.add(Flatten())
+	model.add(Dense(512, activation='relu', W_constraint=maxnorm(3)))
+	model.add(Dropout(0.2))
+	model.add(Dense(num_classes, activation='softmax'))

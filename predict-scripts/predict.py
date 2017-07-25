@@ -4,8 +4,12 @@ from helperScripts import imutils
 from time import time
 import cv2
 
-#imgPath = 'images/adrian_florida.jpg'
-imgPath = '../test-images/5.jpg'
+imgPath = '../test-images/6.jpg'
+#imgPath = '../test-images/6.jpg'
+
+#scaling = True
+scaling = False
+
 
 scale=1.5
 
@@ -15,7 +19,7 @@ predList = []
 
 def classifySlidingWindow(imgPath, model):
 
-	saveCounter = 460
+	saveCounter = 0
 
 	# load the image and define the window width and height
 	image = cv2.imread(imgPath)
@@ -86,7 +90,10 @@ def classifySlidingWindow(imgPath, model):
 		cv2.imwrite('test.png', result)
 		#cv2.imshow("Show", result)
 		#cv2.waitKey(0)
-		break	
+
+
+		if not scaling:
+			break	
 
 	print (time()-start), 's passed'
 

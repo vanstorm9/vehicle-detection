@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from time import time
 
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, Flatten
+from keras.layers import Dense, Dropout, Flatten, Activation
 
 from keras.constraints import maxnorm
 from keras.optimizers import SGD
@@ -32,7 +32,8 @@ labelName = numpy.load(labelName_path)
 
 labelPath = numpy.load(labelPath_path)
 
-modelPath = "../../models/model.h5"
+#modelPath = "../../models/model.h5"
+modelPath = "../../models/model_sm.h5"
 
 
 
@@ -51,6 +52,7 @@ def initalizeModel():
 	# Create the model
 	model = Sequential()
 
+	'''
 	model.add(ZeroPadding2D((1,1),input_shape=(3,64,64)))
 	model.add(Convolution2D(64, 3, 3, activation='relu', name='conv1_1'))
 	model.add(ZeroPadding2D((1,1)))
@@ -95,6 +97,41 @@ def initalizeModel():
 	#model.add(Dropout(0.2))
 	model.add(Dense(1000, activation='relu', name='dense_3'))
 	model.add(Dense(num_classes, activation='softmax', name='dense_4'))
+	'''
+
+	model.add(Convolution2D(32, 3, 3, input_shape=(3, 64, 64), border_mode='same', activation='relu', W_constraint=maxnorm(3)))
+	model.add(Activation('relu'))
+	model.add(MaxPooling2D(pool_size=(2, 2)))
+	model.add(Dropout(0.3))
+
+	model.add(Convolution2D(32, 3, 3, border_mode='same', activation='relu', W_constraint=maxnorm(3)))
+	model.add(Activation('relu'))
+	model.add(MaxPooling2D(pool_size=(2, 2)))
+	model.add(Dropout(0.3))
+
+	model.add(Convolution2D(32, 3, 3, input_shape=(3, 32, 32), border_mode='same', activation='relu', W_constraint=maxnorm(3)))
+	model.add(Activation('relu'))
+	model.add(MaxPooling2D(pool_size=(2, 2)))
+	model.add(Dropout(0.3))
+
+
+	model.add(Convolution2D(64, 3, 3, input_shape=(3, 32, 32), border_mode='same', activation='relu', W_constraint=maxnorm(3)))
+	model.add(Activation('relu'))
+	model.add(MaxPooling2D(pool_size=(2, 2)))
+	model.add(Dropout(0.3))
+
+
+	model.add(Convolution2D(64, 3, 3, input_shape=(3, 32, 32), border_mode='same', activation='relu', W_constraint=maxnorm(3)))
+	model.add(Activation('relu'))
+	model.add(MaxPooling2D(pool_size=(2, 2)))
+	model.add(Dropout(0.3))
+
+	model.add(Flatten())
+	model.add(Dense(512, activation='relu', W_constraint=maxnorm(3)))
+	model.add(Dropout(0.2))
+	model.add(Dense(num_classes, activation='softmax'))
+
+
 
 	t0 = time()
 
