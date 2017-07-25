@@ -66,55 +66,6 @@ num_classes = y_test.shape[1]
 # Create the model
 model = Sequential()
 
-model.add(ZeroPadding2D((1,1),input_shape=(3,64,64)))
-model.add(Convolution2D(64, 3, 3, activation='relu', name='conv1_1'))
-model.add(ZeroPadding2D((1,1)))
-model.add(Convolution2D(64, 3, 3, activation='relu', name='conv1_2'))
-model.add(MaxPooling2D((2,2), strides=(2,2)))
-
-model.add(ZeroPadding2D((1,1)))
-model.add(Convolution2D(128, 3, 3, activation='relu', name='conv2_1'))
-model.add(ZeroPadding2D((1,1)))
-model.add(Convolution2D(128, 3, 3, activation='relu', name='conv2_2'))
-model.add(MaxPooling2D((2,2), strides=(2,2)))
-
-model.add(ZeroPadding2D((1,1)))
-model.add(Convolution2D(256, 3, 3, activation='relu', name='conv3_1'))
-model.add(ZeroPadding2D((1,1)))
-model.add(Convolution2D(256, 3, 3, activation='relu', name='conv3_2'))
-model.add(ZeroPadding2D((1,1)))
-model.add(Convolution2D(256, 3, 3, activation='relu', name='conv3_3'))
-model.add(MaxPooling2D((2,2), strides=(2,2)))
-
-model.add(ZeroPadding2D((1,1)))
-model.add(Convolution2D(512, 3, 3, activation='relu', name='conv4_1'))
-model.add(ZeroPadding2D((1,1)))
-model.add(Convolution2D(512, 3, 3, activation='relu', name='conv4_2'))
-model.add(ZeroPadding2D((1,1)))
-model.add(Convolution2D(512, 3, 3, activation='relu', name='conv4_3'))
-model.add(MaxPooling2D((2,2), strides=(2,2)))
-
-model.add(ZeroPadding2D((1,1)))
-model.add(Convolution2D(512, 3, 3, activation='relu', name='conv5_1'))
-model.add(ZeroPadding2D((1,1)))
-model.add(Convolution2D(512, 3, 3, activation='relu', name='conv5_2'))
-model.add(ZeroPadding2D((1,1)))
-model.add(Convolution2D(512, 3, 3, activation='relu', name='conv5_3'))
-model.add(MaxPooling2D((2,2), strides=(2,2)))
-
-model.add(Flatten(name="flatten"))
-model.add(Dense(4096, activation='relu', name='dense_1'))
-model.add(Dropout(0.5))
-model.add(Dense(4096, activation='relu', name='dense_2'))
-model.add(Dropout(0.5))
-model.add(Dense(1000, activation='relu', name='dense_3'))
-
-
-#model.add(Activation("softmax",name="softmax"))
-model.add(Dense(num_classes, activation='softmax', name='dense_4'))
-
-
-'''
 model.add(Convolution2D(32, 3, 3, input_shape=(3, 64, 64), border_mode='same', activation='relu', W_constraint=maxnorm(3)))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
@@ -134,7 +85,6 @@ model.add(Flatten())
 model.add(Dense(512, activation='relu', W_constraint=maxnorm(3)))
 model.add(Dropout(0.2))
 model.add(Dense(num_classes, activation='softmax'))
-'''
 
 
 

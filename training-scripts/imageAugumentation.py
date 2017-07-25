@@ -11,9 +11,10 @@ import numpy as np
 
 batchSize = 1
 zcaWhitening = False
-savePath = '../scraped-images/vehicle'
+savePath = '../augmented-data/vehicle'
 #savePath = 'images'
-occurance = 10
+data_arg = 'vehicle'
+occurance = 85
 
 
 K.set_image_dim_ordering('th')
@@ -36,13 +37,14 @@ if response == 'l':
 	y_train = np.load(matrixLoadPathY)
 elif response == 'n':
 	begin = time()
-	X_train, y_train = dataset.construct_augmentation_data('vehicle')
+	X_train, y_train = dataset.construct_augmentation_data(data_arg)
 	print 'Matrix construction time: ', (time()-begin),'s'
 
 	
 # reshape to be [samples][pixels][width][height]
-X_train = X_train.reshape(X_train.shape[0], 3, 32, 32)
-#X_test = X_test.reshape(X_test.shape[0], 3, 32, 32)
+print X_train.shape
+X_train = X_train.reshape(X_train.shape[0], 3, 64, 64)
+#X_test = X_test.reshape(X_test.shape[0], 3, 64, 64)
 
 # convert from int to float
 X_train = X_train.astype('float32' )
@@ -51,22 +53,23 @@ X_train = X_train.astype('float32' )
 # define data preparation
 #datagen = ImageDataGenerator(zca_whitening=True)
 
-
-
 datagen = ImageDataGenerator(
 	zca_whitening=zcaWhitening,
 
-	rotation_range=90,
 	width_shift_range=0.2,
 	height_shift_range=0.2,
-	shear_range=0.5,
-	zoom_range=0.5,
-	horizontal_flip=True,
+	shear_range=0,
+	zoom_range=0,
+	rotation_range=0,
+	vertical_flip=True,
 	fill_mode='nearest')
 
+#X_train = np.rot90(X_train,4)
+
+begin = time()
 # fit parameters from data
 datagen.fit(X_train)
-print 'Finished fitting data'
+print 'Finished fitting data in ', (time()-begin), 's'
 
 
 count = 0
@@ -78,7 +81,7 @@ print X_train.shape
 for x in X_train:
 
 	x = np.array([x])
-
+	#x = np.rot90(x,2)
 
 	prefixStr = 'vehicle_' + str(count)
 

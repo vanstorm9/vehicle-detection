@@ -22,10 +22,10 @@ def load_matrix(matrix_path, label_path):
 def construct_augmentation_data(classificationObj):
 
 	if classificationObj == 'vehicle':
-		root_path = '../dataset-augmented/ball/'
+		root_path = '../scraped-images/vehicle/'
 
 	elif classificationObj == 'no-vehicle':
-		root_path = '../dataset-augmented/not-ball/'
+		root_path = '../scraped-images/no-vehicle/'
 
 	else:
 		print 'Not a valid class for augmentation'
@@ -58,8 +58,9 @@ def construct_augmentation_data(classificationObj):
 	print 'Saving numpy arrays'
 
 	# We are going to save our matrix and label array
-	np.save('../numpy-matrix/ball_x_augmentation.npy', main_ar)
-	np.save('../numpy-matrix/ball_y_augmentation.npy', label)
+	np.save('../../numpy-matrix-aug/ball_x_augmentation.npy', main_ar)
+	np.save('../../numpy-matrix-aug/ball_y_augmentation.npy', label)
+
 	return main_ar, label
 
 
@@ -68,11 +69,11 @@ def load_data():
 
 	MAX_ITERATION = 50000
 
-	root_path = '../dataset/'
+	root_path = '../dataset-old/'
 	slash = '/'
 	root = os.listdir(root_path)
 
-	print 'Iterating through folders'
+	print 'Iterating through folders from ', root_path
 
 	# Iterating through the item directories
 
