@@ -2,13 +2,17 @@ from PIL import Image
 import os
 from time import time
 
-'''
+vehicleSelect = True
+#vehicleSelect = False
+
+
 root_path = '../augmented-data/no-vehicle/'
 path_to_save = '../augmented-data/no-vehicle/'
-'''
 
-root_path = '../augmented-data/vehicle/'
-path_to_save = '../augmented-data/vehicle/'
+
+if vehicleSelect:
+	root_path = '../augmented-data/vehicle/'
+	path_to_save = '../augmented-data/vehicle/'
 
 
 angleDegree = 270
