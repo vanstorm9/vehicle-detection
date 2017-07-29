@@ -14,8 +14,8 @@ probVehicleOn = False
 #probNonVehicleOn = True
 probNonVehicleOn = False
 
-scaling = False
-#scaling = True
+#scaling = False
+scaling = True
 
 
 windowSizeAr = [64,32,18]
@@ -28,7 +28,7 @@ chooseWidth=613
 
 predList = []
 
-def classifySlidingWindow(imgPath, model):
+def classifySlidingWindow(imgPath, model, winSizeAr):
 
 	saveCounter = 0
 
@@ -43,17 +43,24 @@ def classifySlidingWindow(imgPath, model):
 
 	print 'Starting scale'
 	start = time()
+
+
 	
 	# loop over the image pyramid
-	for resized in pyramid(image, scale):
+	#for resized in pyramid(image, scale):
+	for winSize in windowSizeAr:
+		print winSize
 		# loop over the sliding window for each layer of the pyramid
-		
+		winW = winSize
+		winH = winSize
+		resized = image
 
+		#for (x, y, window) in sliding_window(resized, stepSize=32, windowSize=(winW, winH)):
 		for (x, y, window) in sliding_window(resized, stepSize=32, windowSize=(winW, winH)):
 			# if the window does not meet our desired window size, ignore it
 			if window.shape[0] != winH or window.shape[1] != winW:
 				continue
-
+			'''
 			# proceeding with doing classifications
 			pred, prob = mlFunctions.getPrediction(window, model)
 			
@@ -90,7 +97,7 @@ def classifySlidingWindow(imgPath, model):
 				saveCounter = saveCounter + 1
 
 			######
-
+			'''
 			clone = resized.copy()
 			cv2.rectangle(clone, (x, y), (x + winW, y + winH), (0, 255, 0), 2)
 			
@@ -116,5 +123,6 @@ def classifySlidingWindow(imgPath, model):
 	print (time()-start), 's passed'
 
 model = mlFunctions.initalizeModel()
-classifySlidingWindow(imgPath, model)
+classifySlidingWindow(imgPath, model, windowSizeAr)
 
+print 'Done'

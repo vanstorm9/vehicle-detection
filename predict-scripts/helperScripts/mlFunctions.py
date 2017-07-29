@@ -174,7 +174,8 @@ def getPrediction(img, model):
 
 
 	pred = model.predict_classes(test_img, 1, verbose=0)
-
+	prob = model.predict(test_img, 1, verbose=0)
+	
 
 	'''
 	print ''
@@ -186,6 +187,6 @@ def getPrediction(img, model):
 	print ''
 	print ''
 	'''
-	return pred[0]
+	return pred[0], prob
 
 
