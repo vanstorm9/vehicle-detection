@@ -14,11 +14,12 @@ probVehicleOn = False
 #probNonVehicleOn = True
 probNonVehicleOn = False
 
-scaling = False
-#scaling = True
+#scaling = False
+scaling = True
 
 
 windowSizeAr = [64,32,18]
+startingHeight = 150
 
 
 scale=1.5
@@ -45,14 +46,22 @@ def classifySlidingWindow(imgPath, model):
 	start = time()
 	
 	# loop over the image pyramid
-	for resized in pyramid(image, scale):
-		# loop over the sliding window for each layer of the pyramid
+	for winSize in windowSizeAr:
+		winW = winSize
+		winH = winSize
+		resized = image	
+
+		for (x, y, window) in sliding_window(resized, startingHeight, stepSize=32, windowSize=(winW, winH)):
+	
 		
 
-		for (x, y, window) in sliding_window(resized, stepSize=32, windowSize=(winW, winH)):
 			# if the window does not meet our desired window size, ignore it
 			if window.shape[0] != winH or window.shape[1] != winW:
 				continue
+
+			if winSize is not windowSizeAr[0]:
+                                window = imutils.resize(window, windowSizeAr[0])
+
 
 			# proceeding with doing classifications
 			pred, prob = mlFunctions.getPrediction(window, model)

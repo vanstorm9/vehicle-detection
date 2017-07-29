@@ -14,7 +14,6 @@ probVehicleOn = False
 #probNonVehicleOn = True
 probNonVehicleOn = False
 
-#scaling = False
 scaling = True
 
 
@@ -47,20 +46,15 @@ def classifySlidingWindow(imgPath, model, winSizeAr):
 
 	
 	# loop over the image pyramid
-	#for resized in pyramid(image, scale):
-	for winSize in windowSizeAr:
-		print winSize
-		# loop over the sliding window for each layer of the pyramid
-		winW = winSize
-		winH = winSize
-		resized = image
+	for resized in pyramid(image, scale):
 
-		#for (x, y, window) in sliding_window(resized, stepSize=32, windowSize=(winW, winH)):
 		for (x, y, window) in sliding_window(resized, stepSize=32, windowSize=(winW, winH)):
 			# if the window does not meet our desired window size, ignore it
 			if window.shape[0] != winH or window.shape[1] != winW:
 				continue
-			'''
+
+
+			# Resize window to original size before feeding into network
 			# proceeding with doing classifications
 			pred, prob = mlFunctions.getPrediction(window, model)
 			
@@ -97,7 +91,7 @@ def classifySlidingWindow(imgPath, model, winSizeAr):
 				saveCounter = saveCounter + 1
 
 			######
-			'''
+			
 			clone = resized.copy()
 			cv2.rectangle(clone, (x, y), (x + winW, y + winH), (0, 255, 0), 2)
 			
