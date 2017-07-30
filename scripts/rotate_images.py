@@ -2,8 +2,8 @@ from PIL import Image
 import os
 from time import time
 
-vehicleSelect = True
-#vehicleSelect = False
+#vehicleSelect = True
+vehicleSelect = False
 
 
 root_path = '../augmented-data/no-vehicle/'
