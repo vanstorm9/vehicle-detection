@@ -4,7 +4,7 @@ from helperScripts import imutils
 from time import time
 import cv2
 
-imgPath = '../test-images/1.jpg'
+imgPath = '../test-images/5.jpg'
 #imgPath = '../test-images/6.jpg'
 
 
@@ -19,6 +19,8 @@ scaling = True
 
 
 windowSizeAr = [64,32,18]
+colorAr = [(0, 255, 0),(255,0,0),(0,0,255)]
+
 startingHeight = 150
 
 
@@ -27,15 +29,14 @@ scale=1.5
 chooseWidth=613
 #chooseWidth=813
 
-predList = []
+mainPredList = []
 
 def classifySlidingWindow(imgPath, model):
-
+	
 	saveCounter = 0
 
 	# load the image and define the window width and height
 	image = cv2.imread(imgPath)
-
 	image = imutils.resize(image, chooseWidth)
 
 	#(winW, winH) = (128, 128)
@@ -44,14 +45,20 @@ def classifySlidingWindow(imgPath, model):
 
 	print 'Starting scale'
 	start = time()
+
+	result = None
 	
+
+	countLoop = 0
+
 	# loop over the image pyramid
 	for winSize in windowSizeAr:
 		winW = winSize
 		winH = winSize
-		resized = image	
+		predList = []
+		resized = image.copy()
 
-		for (x, y, window) in sliding_window(resized, startingHeight, stepSize=32, windowSize=(winW, winH)):
+		for (x, y, window) in sliding_window(image, startingHeight, stepSize=32, windowSize=(winW, winH)):
 	
 		
 
@@ -108,19 +115,38 @@ def classifySlidingWindow(imgPath, model):
 			
 
 		result = resized.copy()
-		for coord in predList:
-			# To write down result pics
-			x = coord[0]
-			y = coord[1]
-			cv2.rectangle(result, (x, y), (x + winW, y + winH), (0, 255, 0), 2)
-			
-		cv2.imwrite('test.png', result)
-		#cv2.imshow("Show", result)
-		#cv2.waitKey(0)
+		
 
+		mainPredList.append(predList[::-1])
+
+
+
+		countLoop = countLoop + 1
 
 		if not scaling:
 			break	
+
+
+
+	# Create final result image
+	
+	i = 0
+
+	result = resized
+
+	for predSub in mainPredList:
+			
+		for coord in predSub:
+			# To write down result pics
+			x = coord[0]
+			y = coord[1]
+			cv2.rectangle(result, (x, y), (x + windowSizeAr[i], y + windowSizeAr[i]), colorAr[i], 2)
+			
+
+		i = i + 1	
+
+	cv2.imwrite('test.png', result)
+	
 
 	print (time()-start), 's passed'
 
